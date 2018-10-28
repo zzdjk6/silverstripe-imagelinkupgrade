@@ -1,0 +1,22 @@
+{
+  "name": "zzdjk6/silverstripe-imagelinkupgrade",
+  "description": "Upgrade Image Links Used In HTMLText and HTMLVar Fields",
+  "homepage": "https://github.com/zzdjk6/silverstripe-imagelinkupgrade",
+  "keywords": ["silverstripe", "upgrade", "image", "HTML"],
+  "license": "MIT",
+  "authors": [
+    {"name": "Thor Chen","email": "zzdjk6@gmail.com"}
+  ],
+  "support": {
+    "issues": "https://github.com/zzdjk6/silverstripe-imagelinkupgrade/issues"
+  },
+  "require": {
+    "silverstripe/cms": "^4",
+    "silverstripe/framework": "^4"
+  },
+  "autoload": {
+    "psr-4": {
+      "zzdjk6\\SilverStripe\\ImageLinkUpgrade\\": "src/"
+    }
+  }
+}
