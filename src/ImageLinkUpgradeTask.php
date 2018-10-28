@@ -18,7 +18,7 @@ class ImageLinkUpgradeTask extends BuildTask
     {
         echo '<pre>';
 
-        // Retrieve all classes contains HTMLText or HTMLVarchar field
+        // Retrieve all DataObject classes contains HTMLText or HTMLVarchar field
         $targetClassesProvider = new TargetClassesProvider(); // TODO: use Injector
         $targetClasses = $targetClassesProvider->getTargetClasses();
         //print_r($targetClasses);exit;
