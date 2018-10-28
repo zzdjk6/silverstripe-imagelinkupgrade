@@ -5,6 +5,7 @@ namespace zzdjk6\SilverStripe\ImageLinkUpgrade;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\ValidationException;
+use SilverStripe\Versioned\Versioned;
 
 class ImageLinkUpgradeTask extends BuildTask
 {
@@ -28,7 +29,7 @@ class ImageLinkUpgradeTask extends BuildTask
         $imageMapping = $imageMappingProvider->getUserImageMapping();
         //print_r($imageMapping);exit;
 
-        // Get upgrade info by each class
+        // Gather all upgrade info by each class
         $upgradeInfoProvider = new UpgradeInfoProvider($imageMapping); // TODO: use Injector
 
         $allUpgradeInfoList = [];
@@ -38,14 +39,22 @@ class ImageLinkUpgradeTask extends BuildTask
                 $allUpgradeInfoList = array_merge($allUpgradeInfoList, $upgradeInfoList);
             }
         }
-        //print_r($allUpgradeInfoList);
-        //exit;
+        //print_r($allUpgradeInfoList);exit;
+        // TODO: Currently, some DataObject will be updated several times due to class inherit (e.g., subclass of SiteTree)
 
         // Apply changes to DB according to matches
-        // TODO: Currently, it still require a manual publish after this task
         foreach ($allUpgradeInfoList as $upgradeInfo) {
             /* @var UpgradeInfo $upgradeInfo */
+            // This is the Stage version of the DataObject
             $dataObject = DataObject::get_by_id($upgradeInfo->getClassName(), $upgradeInfo->getID());
+
+            // Deal with version
+            $theLive = Versioned::get_by_stage($upgradeInfo->getClassName(), Versioned::LIVE)->byID($upgradeInfo->getID());
+            $modifyTheLive = false;
+            if ($theLive && $theLive->Version && $dataObject->Version && $theLive->Version == $dataObject->Version) {
+                $modifyTheLive = true;
+            }
+
             echo "Upgrading ==> ClassName: {$upgradeInfo->getClassName()}, Field: {$upgradeInfo->getField()}, ID: {$upgradeInfo->getID()}\n";
             echo "\n";
             echo "Original {$upgradeInfo->getField()}:\n";
@@ -71,6 +80,11 @@ class ImageLinkUpgradeTask extends BuildTask
                     $dataObject->writeWithoutVersion();
                 } else {
                     $dataObject->write();
+                }
+
+                if ($modifyTheLive) {
+                    echo "\nAlso modified the LIVE version of this object\n";
+                    $dataObject->publish('Stage', 'Live');
                 }
             } catch (ValidationException $e) {
                 echo "\n\nError: " . $e->getMessage() . "\n\n";

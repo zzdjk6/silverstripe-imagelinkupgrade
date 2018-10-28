@@ -47,5 +47,7 @@ Then just run it like other tasks: `/dev/tasks/ImageLinkUpgradeTask`
 
 ## Caveats
 
-1. Make sure you backup your database before using this tool (it will modify your database)
-2. You still need to do a manual "publish" for each page / versioned object. I am looking forward to getting rid of this step in the future.
+1. Make sure you backup your database before using this tool (it will modify your database).
+2. Currently, some `DataObject` will be updated several times due to class inherit (e.g., subclasses of `SiteTree`). 
+This issue won't affect the final result (just a version jump compare to the original one)
+3. This tool keeps the `Status` of versioned `DataObject` in mind, which means if the `Live` version is not the same as the `Stage` version, only `Stage` version will be changed.
