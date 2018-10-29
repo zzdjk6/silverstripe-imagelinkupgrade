@@ -26,21 +26,10 @@ More details could be found in the code.
 
 ## How to use
 
-Add dependency in your `composer.json`:
+Add dependency via `composer`:
 
-```javascript
-...
-"require-dev": {
-    "zzdjk6/silverstripe-imagelinkupgrade": "^1.0"
-},
-...(below will not be necessary after publish to packagist.org)...
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "git@github.com:zzdjk6/silverstripe-imagelinkupgrade.git"
-    }
-],
-...
+```
+composer require zzdjk6/silverstripe-imagelinkupgrade
 ```
 
 Then just run it like other tasks: `/dev/tasks/ImageLinkUpgradeTask`
