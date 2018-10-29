@@ -33,7 +33,7 @@ Add dependency in your `composer.json`:
 "require-dev": {
     "zzdjk6/silverstripe-imagelinkupgrade": "^1.0"
 },
-...(below won't be necessary after publish to packagist.org)...
+...(below will not be necessary after publish to packagist.org)...
 "repositories": [
     {
         "type": "vcs",
