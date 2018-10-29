@@ -31,9 +31,9 @@ Add dependency in your `composer.json`:
 ```javascript
 ...
 "require-dev": {
-    "zzdjk6/silverstripe-imagelinkupgrade": "dev-master"
+    "zzdjk6/silverstripe-imagelinkupgrade": "^1.0"
 },
-...
+...(below won't be necessary after publish to packagist.org)...
 "repositories": [
     {
         "type": "vcs",
